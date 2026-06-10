@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import joblib
 import os
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from preprocess import clean_text
+from src.preprocess import clean_text
 
 app = FastAPI(title="Review Sentiment API")
 app.mount(

@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from preprocess import clean_text
+from src.preprocess import clean_text
 
 
 def score_file(input_path: str, text_col: str, out_path: str):

@@ -5,7 +5,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import joblib
-from preprocess import clean_text
+from src.preprocess import clean_text
 
 
 def train_and_save(input_path: str, text_col: str, label_col: str, model_out: str):
