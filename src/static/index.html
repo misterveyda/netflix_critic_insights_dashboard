@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Review Sentiment UI</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 700px; }
+    textarea { width: 100%; min-height: 120px; margin-top: .5rem; }
+    button { margin-top: 1rem; padding: .75rem 1.2rem; }
+    .result { margin-top: 1rem; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; }
+  </style>
+</head>
+<body>
+  <h1>Review Sentiment UI</h1>
+  <p>Enter a Netflix review and choose a prediction method.</p>
+  <label for="review">Review text</label>
+  <textarea id="review" placeholder="Enter review text..."></textarea>
+
+  <div>
+    <button onclick="predict('vader')">Predict with VADER</button>
+    <button onclick="predict('nb')">Predict with Naive Bayes</button>
+  </div>
+
+  <div class="result" id="result">Prediction results appear here.</div>
+
+  <script>
+    async function predict(method) {
+      const text = document.getElementById('review').value.trim();
+      const result = document.getElementById('result');
+      if (!text) {
+        result.textContent = 'Please enter review text.';
+        return;
+      }
+      result.textContent = 'Predicting...';
+      try {
+        const res = await fetch(`/predict/${method}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || JSON.stringify(data));
+        result.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+      } catch (err) {
+        result.textContent = 'Error: ' + err.message;
+      }
+    }
+  </script>
+</body>
+</html>

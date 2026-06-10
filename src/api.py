@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import joblib
 import os
@@ -6,6 +7,12 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from preprocess import clean_text
 
 app = FastAPI(title="Review Sentiment API")
+app.mount(
+    "/",
+    StaticFiles(directory=os.path.join(os.path.dirname(__file__), "static"), html=True),
+    name="static",
+)
+
 analyzer = SentimentIntensityAnalyzer()
 MODEL_PATH = "model.joblib"
 

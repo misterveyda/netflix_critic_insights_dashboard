@@ -30,6 +30,28 @@ python src/vader_score.py --input data/reviews.csv --text-col review --out vader
 python src/train_nb.py --input data/labeled_reviews.csv --text-col review --label-col label --model-out model.joblib
 ```
 
+5. Run the API locally:
+
+```bash
+uvicorn src.api:app --reload --port 8000
+```
+
+6. Open the browser UI:
+
+- Navigate to `http://localhost:8000`
+- Enter review text and choose `Predict with VADER` or `Predict with Naive Bayes`
+
+Docker
+
+Build and run the API container:
+
+```bash
+docker build -t review-sentiment-api .
+docker run -p 8000:8000 review-sentiment-api
+```
+
+Then open `http://localhost:8000` to use the UI.
+
 Files
 
 - [src/vader_score.py](src/vader_score.py)
